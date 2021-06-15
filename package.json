@@ -1,0 +1,23 @@
+{
+  "name": "basic-node",
+  "version": "1.0.0",
+  "description": "",
+  "main": "getFile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Shahjalalrafi/dive-into-node.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Shahjalalrafi/dive-into-node/issues"
+  },
+  "homepage": "https://github.com/Shahjalalrafi/dive-into-node#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
