@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/Shahjalalrafi/dive-into-node#readme",
   "dependencies": {
+    "ejs": "^3.1.6",
     "express": "^4.17.1"
   }
 }

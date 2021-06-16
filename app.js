@@ -10,6 +10,8 @@ const port = 5000
 app.use(urlencoded({extended: true}))
 app.use(express.json())
 
+app.set('view engine', 'ejs')
+
 // function customMiddleWare(req, res, next) {
 //     if(req.url === '/help') {
 //         res.send('<h2>sorry, this is bloked by admin</h2>')
@@ -48,6 +50,35 @@ app.use(express.json())
 // })
 
 app.use('/contacts', contactRouter)
+
+app.get('/about', (req, res) => {
+    res.render('pages/about')
+})
+
+app.get('/help', (req, res) => {
+    res.render('pages/help')
+})
+
+app.get('/', (req, res) => {
+    let post = {
+        title: 'i am title',
+        body: 'i am body',
+        published: false
+    }
+
+    let posts = [
+        {title: 'post one', author: 'shahjalal rafi'},
+        {title: 'post two', author: ' rafi'},
+        {title: 'post three', author: 'shahjalal'},
+        {title: 'post four', author: 'rakib'},
+    ]
+
+    res.render('pages/index', {
+        title: 'ejs is awesome',
+        post,
+        posts
+    })
+})
 
 app.get('*', (req, res) => {
     res.send('page not found')

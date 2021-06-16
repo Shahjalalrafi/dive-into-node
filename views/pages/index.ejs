@@ -1,0 +1,25 @@
+<%- include('../partials/upper.ejs') %>
+    <%- include('../partials/nav.ejs') %>
+    <h2><%= title %></h2>
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium laborum tempore molestias natus, omnis quas earum hic veniam officia reiciendis! Itaque inventore commodi laudantium ab tempora praesentium, labore omnis ullam.</p>
+    <%= new Date().toString() %>
+
+    <% if(post.published) {%>
+        <h3>title:<%=  post.title %></h3>
+        <p>body:<%=  post.body %></p>
+        <% }else { %>
+            <h2>post is not published yet</h2>
+    <% }%>
+
+    <% if(posts.length){%>
+        <ul>
+            <% for(let p of posts){%>
+                <li><%= p.title %> by <%= p.author %></li>
+                <% } %>
+        </ul>
+        <% }else{%>
+            <h2>you don't have any posts</h2>
+    <%}%>
+
+</body>
+</html>
