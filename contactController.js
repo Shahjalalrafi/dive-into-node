@@ -5,8 +5,9 @@ exports.getAllContacts = (req, res) => {
 }
 
 exports.createAContact = (req, res) => {
-    console.log(req.body)
+
     const {name, phone, email } = req.body
+    console.log(req.body)
     let contact = contacts.createAContact({
         name,
         phone,

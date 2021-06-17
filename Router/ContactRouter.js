@@ -5,7 +5,7 @@ const {getAllContact, postSinglePost, getSinglePost, updateSinglePost, deleteSin
 router.get('/', getAllContact)
 router.post('/', postSinglePost)
 router.get('/:id', getSinglePost)
+router.get('/delete/:id', deleteSinglePost)
 router.put('/:id', updateSinglePost)
-router.delete('/:id', deleteSinglePost)
 
 module.exports = router

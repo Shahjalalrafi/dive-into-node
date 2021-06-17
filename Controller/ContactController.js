@@ -2,8 +2,8 @@ const Contact = require('../Schema/Contact')
 
 exports.getAllContact = (req, res) => {
      Contact.find({})
-     .then(c => {
-         res.json(c)
+     .then(contacts => {
+        res.render('contacts/contacts', {contacts, error: {}})
      })
      .catch(err => {
          console.log(err)
@@ -14,23 +14,76 @@ exports.getAllContact = (req, res) => {
 }
 
 exports.postSinglePost = (req, res) => {
-    let {name, email, phone} = req.body
-    let contact = new Contact({
-        name,
-        email,
-        phone
-    })
+    let {name, email, phone, id} = req.body
 
-    contact.save()
-    .then(c => {
-        res.json(c)
-    })
-    .catch(e => {
-        console.log(e)
-        res.json({
-            message: 'Error occured'
+    let error = {}
+
+    if(!name) {
+        error.name = 'please provide a name'
+    }
+
+    if(!email) {
+        error.email = 'please provide a email'
+    }
+
+    if(!phone) {
+        error.phone = 'please provide a phone'
+    }
+
+    let isError = Object.keys(error).length > 0
+
+    if(isError) {
+        Contact.find()
+        .then(contacts => {
+            res.render('contacts/contacts', {contacts, error})
         })
-    })
+        .catch(e => {
+            console.log(e)
+            res.json({
+                message: 'Error occured'
+            })
+        })
+    }
+
+    if(id) {
+        Contact.findOneAndUpdate({_id: id}, {
+            $set: {
+                name, email, phone
+            }
+        }).then(() => {
+            Contact.find()
+            .then(contacts => {
+                res.render('contacts/contacts', {contacts, error: {}})
+            })
+        })
+        .catch(e => {
+            console.log(e)
+            return res.json({
+                message: 'Error occured'
+            })
+        })
+
+    }else {
+        let contact = new Contact({
+            name,
+            email,
+            phone
+        })
+    
+        contact.save()
+        .then(c => {
+            Contact.find()
+            .then(contacts => {
+                return res.render('contacts/contacts', {contacts, error: {}})
+            })
+        })
+        .catch(e => {
+            console.log(e)
+            return res.json({
+                message: 'Error occured'
+            })
+        })
+    }
 }
 
 exports.getSinglePost = (req, res) => {
@@ -69,10 +122,14 @@ exports.updateSinglePost = (req, res) => {
 exports.deleteSinglePost = (req, res) => {
     let {id} = req.params
     Contact.findOneAndDelete({_id: id})
-    .then(contact => {
-        res.json(contact)
+    .then(() => {
+        Contact.find()
+        .then(contacts => {
+            res.render('contacts/contacts', {contacts, error: {}})
+        })
     })
     .catch(err => {
+        console.log(err)
         res.json({
             error: 'Error occured'
         })
